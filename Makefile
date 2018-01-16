@@ -1,13 +1,16 @@
 all: out/strace_4.20_armhf.hmod
 
-out/strace_4.20_armhf.hmod: src/strace-4.20/strace
-	mkdir -p "mod/bin/" "out/"
-	cp "$<" "mod/bin/"
-	arm-linux-gnueabihf-strip "mod/bin/strace"
-	upx --ultra-brute "mod/bin/strace"
-	chmod +x "mod/bin/strace"
+out/strace_4.20_armhf.hmod: mod/bin/strace
+	mkdir -p "out/"
 	tar -czvf "$@" -C "mod/" bin
 	touch "$@"
+
+mod/bin/strace: src/strace-4.20/strace
+	mkdir -p "`dirname "$@"`"
+	cp "$<" "$@"
+	arm-linux-gnueabihf-strip "$@"
+	upx --ultra-brute "$@"
+	chmod +x "$@"
 
 src/strace-4.20/strace: src/strace-4.20/Makefile
 	make -C "src/strace-4.20"

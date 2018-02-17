@@ -4,14 +4,14 @@ out/strace_4.20_armhf.hmod: mod/bin/strace
 	mkdir -p "out/"
 	echo "---" > mod/readme.md
 	echo "Name: `head -n 1 readme.md | cut -c 3-`" >> mod/readme.md
+	echo "Version: 4.20" >> mod/readme.md
 	echo "Creator: DanTheMan827" >> mod/readme.md
 	echo "Developer: Dmitry Levin" >> mod/readme.md
 	echo "Category: Developer Tools" >> mod/readme.md
 	echo "Packed on: `date`" >> mod/readme.md
-	echo "Git commit: $(GIT_COMMIT)" >> mod/readme.md
 	echo "---" >> mod/readme.md
 	sed 1d readme.md >> mod/readme.md
-	tar -czvf "$@" -C "mod/" bin
+	tar -czvf "$@" -C "mod/" bin readme.md
 	touch "$@"
 
 mod/bin/strace: src/strace-4.20/strace
